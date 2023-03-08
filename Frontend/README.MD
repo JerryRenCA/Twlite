@@ -1,3 +1,10 @@
+# how to run
+npm i
+npm run dev
+http://localhost:5173
+
+
+# Feature
 JERRY'S FRONTEND BOILER PLATE
 
 Features
