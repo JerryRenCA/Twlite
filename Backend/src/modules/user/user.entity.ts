@@ -1,3 +1,4 @@
+import { BlogEntity } from '../blog/blog.entity';
 import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
 
 import type { IAbstractEntity } from '../../common/abstract.entity';
@@ -9,6 +10,8 @@ import type { UserDtoOptions } from './dtos/user.dto';
 import { UserDto } from './dtos/user.dto';
 import type { IUserSettingsEntity } from './user-settings.entity';
 import { UserSettingsEntity } from './user-settings.entity';
+import { TopicEntity } from '../topic/topic.entity';
+import { ReplyEntity } from '../reply/reply.entity';
 
 export interface IUserEntity extends IAbstractEntity<UserDto> {
   firstName?: string;
@@ -65,4 +68,11 @@ export class UserEntity
 
   @OneToMany(() => PostEntity, (postEntity) => postEntity.user)
   posts: PostEntity[];
+
+  @OneToMany(() => BlogEntity, (blogEntity) => blogEntity.user)
+  blogs: BlogEntity[];
+  @OneToMany(() => TopicEntity, (topicEntity) => topicEntity.user)
+  topics: BlogEntity[];
+  @OneToMany(() => ReplyEntity, (replyEntity) => replyEntity.user)
+  replys: BlogEntity[];
 }

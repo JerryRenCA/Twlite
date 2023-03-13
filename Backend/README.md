@@ -4,3 +4,9 @@
 ## npm i;
 ## npm run start:dev
 ## http://localhost:3000/documentation
+
+* Maybe just restarting the TS server can work.
+Using VsCode:
+type: ctrl + shift + p
+choose: > TypeScript: Restart TS server
+* 

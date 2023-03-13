@@ -7,8 +7,11 @@ import { I18nModule } from 'nestjs-i18n';
 import path from 'path';
 
 import { AuthModule } from './modules/auth/auth.module';
+import { BlogModule } from './modules/blog/blog.module';
 import { HealthCheckerModule } from './modules/health-checker/health-checker.module';
 import { PostModule } from './modules/post/post.module';
+import { ReplyModule } from './modules/reply/reply.module';
+import { TopicModule } from './modules/topic/topic.module';
 import { UserModule } from './modules/user/user.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
@@ -18,6 +21,9 @@ import { SharedModule } from './shared/shared.module';
     AuthModule,
     UserModule,
     PostModule,
+    BlogModule,
+    TopicModule,
+    ReplyModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
