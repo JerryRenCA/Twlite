@@ -18,6 +18,7 @@ import { ReplyEntity } from './reply.entity';
 import { ReplyNewDto } from './dtos/reply-new.dto';
 import { TopicEntity } from '../topic/topic.entity';
 import { TopicService } from '../topic/topic.service';
+import { CommentService } from '../comment/comment.service';
 
 
 @Injectable()
@@ -26,6 +27,7 @@ export class ReplyService {
     @InjectRepository(ReplyEntity)
     private replyRepository: Repository<ReplyEntity>,
     private topicService: TopicService,
+    private commentService: CommentService,
     private validatorService: ValidatorService,
     private awsS3Service: AwsS3Service,
     private commandBus: CommandBus,
@@ -33,10 +35,10 @@ export class ReplyService {
 
   async createReply(    replyNewDto: ReplyNewDto,userId:Uuid,
     file?: IFile): Promise<ReplyEntity>{
-      const topic_id=replyNewDto.topicId;
-      const topic= await this.topicService.getTopic(topic_id)
+      const comment_id=replyNewDto.commentId;
+      const comment= await this.topicService.getTopic(comment_id)
 
-      if(topic==null){
+      if(comment==null){
         throw new Error();
       }
 

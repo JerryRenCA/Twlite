@@ -11,6 +11,7 @@ import type { TopicDtoOptions } from './dtos/topic.dto';
 
 import { TopicDto } from './dtos/topic.dto';
 import { ReplyEntity } from '../reply/reply.entity';
+import { CommentEntity } from '../comment/comment.entity';
 
 export interface ITopicEntity extends IAbstractEntity<TopicDto> {
   title: string;
@@ -43,5 +44,8 @@ export class TopicEntity
 
   @OneToMany(() => ReplyEntity, (replyEntity) => replyEntity.topic)
   replys: ReplyEntity[];
+
+  @OneToMany(() => ReplyEntity, (replyEntity) => replyEntity.topic)
+  comments: CommentEntity[];
 
 }

@@ -3,13 +3,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 
 import { Trim } from '../../../decorators/transform.decorators';
 
-export class ReplyNewDto {
-  @ApiProperty()
-  @IsString()
-  @IsNotEmpty()
-  @Trim()
-  readonly title: string;
-
+export class CommentNewDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
@@ -20,5 +14,5 @@ export class ReplyNewDto {
   @IsString()
   @IsNotEmpty()
   @Trim()
-  readonly commentId: Uuid;
+  readonly topicId: Uuid;
 }

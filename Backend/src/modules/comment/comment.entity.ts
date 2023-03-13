@@ -7,39 +7,30 @@ import { RoleType } from '../../constants';
 import { UseDto, VirtualColumn } from '../../decorators';
 import { PostEntity } from '../post/post.entity';
 
-import type { ReplyDtoOptions } from './dtos/reply.dto';
+import type { CommentDtoOptions } from './dtos/comment.dto';
 
-import { ReplyDto } from './dtos/reply.dto';
+import { CommentDto } from './dtos/comment.dto';
 import { TopicEntity } from '../topic/topic.entity';
 
-export interface IReplyEntity extends IAbstractEntity<ReplyDto> {
-
+export interface ICommentEntity extends IAbstractEntity<CommentDto> {
   content: string;
-
 }
 
-@Entity({ name: 'replys' })
-@UseDto(ReplyDto)
-export class ReplyEntity
-  extends AbstractEntity<ReplyDto, ReplyDtoOptions>
-  implements IReplyEntity
+@Entity({ name: 'comments' })
+@UseDto(CommentDto)
+export class CommentEntity
+  extends AbstractEntity<CommentDto, CommentDtoOptions>
+  implements ICommentEntity
 {
   @Column({ type: 'uuid',nullable: false })
   userId: Uuid;
   @Column({ type: 'uuid',nullable: false })
-  commentId: Uuid;
+  topicId: Uuid;
 
   @Column({ nullable: false })
   content: string;
 
-  @ManyToOne(() => UserEntity, (userEntity) => userEntity.replys, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
-
-  @ManyToOne(() => TopicEntity, (topicEntity) => topicEntity.replys, {
+  @ManyToOne(() => TopicEntity, (topicEntity) => topicEntity.comments, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })

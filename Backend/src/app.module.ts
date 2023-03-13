@@ -8,6 +8,7 @@ import path from 'path';
 
 import { AuthModule } from './modules/auth/auth.module';
 import { BlogModule } from './modules/blog/blog.module';
+import { CommentModule } from './modules/comment/comment.module';
 import { HealthCheckerModule } from './modules/health-checker/health-checker.module';
 import { PostModule } from './modules/post/post.module';
 import { ReplyModule } from './modules/reply/reply.module';
@@ -24,6 +25,7 @@ import { SharedModule } from './shared/shared.module';
     BlogModule,
     TopicModule,
     ReplyModule,
+    CommentModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
