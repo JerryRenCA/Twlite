@@ -1,12 +1,18 @@
+const { purple } = require('@mui/material/colors');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
+  
   ],
   theme: {
     extend: {
       backgroundImage: {
-        'bg-hot': "url('/assets/pexels-abdullah-ghatasheh-1631678.jpg')",
+        'bg-puppy-2': "url('/images/puppy-2.jpg')",
+        'bg-puppy-1': "url('/images/puppy-1.jpg')",
+        'bg-local': "url('/images/the local.jpg')",
         'footer-texture': "url('/img/footer-texture.png')",
       },
       fontFamily:{
@@ -24,6 +30,14 @@ module.exports = {
       },
       animation:{
         'blink':'blink 1s steps(2) infinite'
+      },
+      backgroundColor:{ 
+        'primary-purple': purple[800],
+        'primary-purple-lighter': purple[700]
+      },
+      color:{
+        'primary-purple': purple[600],
+        'primary-purple-lighter': purple[500]
       }
     },
   },
