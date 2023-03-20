@@ -34,7 +34,7 @@ const TopicPostPanel = ({setTopics}:{setTopics:React.Dispatch<React.SetStateActi
      if(title.trim()==""||content.trim()=="")return;
     createTopic({topicNew:topicNewDto,bearer:authCtx.state.user.userCredential.accessToken}).then(p=>{
         setTopics(prev=>[p,...prev]);
-    })
+    })  
 
  }
   return (
