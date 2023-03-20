@@ -46,6 +46,7 @@ export class TopicService {
     pageOptionsDto: TopicsPageOptionsDto,
   ): Promise<PageDto<TopicDto>> {
     const queryBuilder = this.topicRepository.createQueryBuilder('topic');
+    queryBuilder.addOrderBy('created_at',"DESC");
     const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);

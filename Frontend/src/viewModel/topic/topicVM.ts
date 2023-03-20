@@ -17,6 +17,7 @@ export const getTopics=async ({bearer}:{bearer:string}):Promise<T_Topic[]>=>{
         })
         const dataJson=await data.json();
         console.log(dataJson)
+        if(dataJson.data==null)return[]
         return dataJson.data;
       } catch (err) {
         return [];

@@ -12,7 +12,7 @@ import TitleField from "./components/titleField/TitleField";
 // ============== Types ===============================
 // ============== Styled Components ===================
 const Container = tw.div`flex justify-center items-center`;
-const Form = tw.form`w-[35rem] border-x-[1px] border-dashed`;
+const Form = tw.form`w-[35rem] border-x-[1px] border-dashed border-gray-600`;
 const Title = tw.div`m-4 text-center text-3xl font-playfair `;
 const FieldWrapper = tw.div`mx-4 my-1`;
 // ============== Functions & Data ====================
@@ -29,9 +29,9 @@ const TopicPostPanel = ({setTopics}:{setTopics:React.Dispatch<React.SetStateActi
   useEffect(()=>{topicNewDto.title=title,topicNewDto.content=content},[title,content])
   const authCtx=useContext(authContext)
  const handlePostNew=(e:React.FormEvent<HTMLFormElement>)=>{
+   e.preventDefault()
      console.log(topicNewDto)
-     if(title==""||content=="")return;
-    e.preventDefault()
+     if(title.trim()==""||content.trim()=="")return;
     createTopic({topicNew:topicNewDto,bearer:authCtx.state.user.userCredential.accessToken}).then(p=>{
         setTopics(prev=>[p,...prev]);
     })

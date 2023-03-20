@@ -18,6 +18,7 @@ import type { UserDto } from './dtos/user.dto';
 import type { UsersPageOptionsDto } from './dtos/users-page-options.dto';
 import { UserEntity } from './user.entity';
 import type { UserSettingsEntity } from './user-settings.entity';
+import { UserUpdateDto } from './dtos/user-update.dto';
 
 @Injectable()
 export class UserService {
@@ -42,26 +43,23 @@ export class UserService {
     const queryBuilder = this.userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect<UserEntity, 'user'>('user.settings', 'settings');
-
     if (options.email) {
       queryBuilder.orWhere('user.email = :email', {
         email: options.email,
       });
     }
-
     if (options.username) {
       queryBuilder.orWhere('user.username = :username', {
         username: options.username,
       });
     }
-
     return queryBuilder.getOne();
   }
 
   @Transactional()
   async createUser(
     userRegisterDto: UserRegisterDto,
-    file?: IFile,
+    file?: Express.Multer.File,
   ): Promise<UserEntity> {
     const user = this.userRepository.create(userRegisterDto);
 
@@ -70,7 +68,9 @@ export class UserService {
     }
 
     if (file) {
-      user.avatar = await this.awsS3Service.uploadImage(file);
+      console.log('file:',file)
+      // user.avatar = await this.awsS3Service.uploadImage(file);
+      user.avatar = file.filename;
     }
 
     await this.userRepository.save(user);
@@ -91,7 +91,6 @@ export class UserService {
   ): Promise<PageDto<UserDto>> {
     const queryBuilder = this.userRepository.createQueryBuilder('user');
     const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
-
     return items.toPageDto(pageMetaDto);
   }
 
@@ -116,5 +115,11 @@ export class UserService {
     return this.commandBus.execute<CreateSettingsCommand, UserSettingsEntity>(
       new CreateSettingsCommand(userId, createSettingsDto),
     );
+  }
+
+  async updateUser(user: UserEntity,userUpdateDto:UserUpdateDto){
+    
+    user[userUpdateDto.key]=userUpdateDto.value;
+    return this.userRepository.save(user);
   }
 }

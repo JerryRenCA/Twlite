@@ -2,6 +2,7 @@ import './boilerplate.polyfill';
 
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { I18nModule } from 'nestjs-i18n';
 import path from 'path';
@@ -46,6 +47,9 @@ import { SharedModule } from './shared/shared.module';
       }),
       imports: [SharedModule],
       inject: [ApiConfigService],
+    }),
+    MulterModule.register({
+      dest: './uploads',
     }),
     HealthCheckerModule,
   ],

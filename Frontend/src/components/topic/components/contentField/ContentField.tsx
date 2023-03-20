@@ -33,8 +33,8 @@ const ContentField = ({setContent}:{setContent:React.Dispatch<React.SetStateActi
                     paddingX:'1px',
                   color: "#ccc",
                   borderBottomWidth: "1px",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "white",
+                  // borderBottomStyle: "dot",
+                  // borderBottomColor: "grey",
                 },
                 "& .MuiFormLabel-root": {
                   color: "white",

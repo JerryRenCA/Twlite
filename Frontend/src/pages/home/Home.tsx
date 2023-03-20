@@ -18,7 +18,7 @@ export enum PageStatus {
 }
 // ============== Styled Components ===================
 const Container = tw.div`flex flex-col justify-center items-center`;
-const Wrapper = tw.div`min-w-[30rem] max-w-[40rem] `;
+const Wrapper = tw.div`min-w-[30rem] max-w-[40rem] border-b-[1px]`;
 const Panel = tw.div``;
 // ============== Functions & Data ====================
 // ============== Module ==============================
@@ -27,7 +27,8 @@ const Home = () => {
   const [topics, setTopics] = useState<T_Topic[]>([]);
   const authCtx=useContext(authContext);
   useEffect(() => {
-    getTopics({bearer:authCtx.state.user.userCredential.accessToken}).then(p=>setTopics(p))
+    if(authCtx.state.isLogin)
+        getTopics({bearer:authCtx.state.user.userCredential.accessToken}).then(p=>setTopics(p))
   }, []);
   return (
     <Container>
@@ -44,7 +45,7 @@ const Home = () => {
           </Panel>
         )}
         <TopicPostPanel setTopics={setTopics}/>
-        {topics.map((topic) => (
+        {topics&&topics.map((topic) => (
           <Topic key={topic.id} topic={topic} />
         ))}
       </Wrapper>

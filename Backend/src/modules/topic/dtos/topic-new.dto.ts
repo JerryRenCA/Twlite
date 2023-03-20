@@ -12,7 +12,7 @@ export class TopicNewDto {
 
   @ApiProperty()
   @IsString()
-  @IsNotEmpty()
+  // @IsNotEmpty()
   @Trim()
   readonly content: string;
 }

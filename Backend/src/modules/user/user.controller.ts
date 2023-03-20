@@ -1,8 +1,10 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
+  Put,
   Query,
   ValidationPipe,
 } from '@nestjs/common';
@@ -14,6 +16,7 @@ import { ApiPageOkResponse, Auth, AuthUser, UUIDParam } from '../../decorators';
 import { UseLanguageInterceptor } from '../../interceptors/language-interceptor.service';
 import { TranslationService } from '../../shared/services/translation.service';
 import { UserDto } from './dtos/user.dto';
+import { UserUpdateDto } from './dtos/user-update.dto';
 import { UsersPageOptionsDto } from './dtos/users-page-options.dto';
 import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
@@ -64,5 +67,23 @@ export class UserController {
   })
   getUser(@UUIDParam('id') userId: Uuid): Promise<UserDto> {
     return this.userService.getUser(userId);
+  }
+
+  @Put()
+  @Auth([RoleType.USER])
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get users list',
+    type: UserDto,
+  })
+  updateUser(
+    @Body() userUpdateDto: UserUpdateDto,
+    @AuthUser() user: UserEntity,
+  ) {
+    console.info(user);
+    console.info(userUpdateDto);
+
+    return this.userService.updateUser(user, userUpdateDto);
   }
 }

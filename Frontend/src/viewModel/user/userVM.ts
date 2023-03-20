@@ -1,4 +1,5 @@
 import { T_userLocalStorage } from "../../contexts/authContext/AuthProvider";
+import { URLBasic } from "../../data/types/dataConfig";
 import { default_User, default_UserCredential } from "../../data/types/user";
 import { T_userInfoLoginDto, T_userInfoRegisterDto } from "./userDtos";
 
@@ -6,7 +7,7 @@ import { T_userInfoLoginDto, T_userInfoRegisterDto } from "./userDtos";
 export const login = async (
     userInfo: T_userInfoLoginDto
   ): Promise<T_userLocalStorage> => {
-    const url="http://localhost:3000/auth/login";
+    const url=URLBasic+ "/auth/login";
     try {
         const data= await fetch(url,{
             method:"POST",
@@ -31,7 +32,7 @@ export const login = async (
   export const register = async (
     userInfo: T_userInfoRegisterDto
   ): Promise<T_userLocalStorage> => {
-    const url="http://localhost:3000/auth/register";
+    const url=URLBasic+ "/auth/register";
     try {
       const data= await fetch(url,{
         method:"POST",

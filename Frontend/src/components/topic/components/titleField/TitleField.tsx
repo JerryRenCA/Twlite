@@ -28,8 +28,8 @@ const TitleField = ({setTitle}:{setTitle:React.Dispatch<React.SetStateAction<str
                   color: "#ccc",
                   paddingX:'1px',
                   borderBottomWidth: "1px",
-                  borderBottomStyle: "solid",
-                  borderBottomColor: "white",
+                  borderBottomStyle: "dotted",
+                  borderBottomColor: "grey",
                 },
                 "& .MuiFormLabel-root": {
                   color: "white",
