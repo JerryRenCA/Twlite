@@ -79,16 +79,16 @@ export default function MainMemuAfterLogin() {
         <MenuItem onClick={handleClose}>
           <Avatar /> Profile
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <Divider />
+        {/* <MenuItem onClick={handleClose}>
           <Avatar /> My account
         </MenuItem>
-        <Divider />
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
           Add another account
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <Settings fontSize="small" />
@@ -97,7 +97,7 @@ export default function MainMemuAfterLogin() {
         </MenuItem>
         <MenuItem onClick={()=>authCtx.logout()}>
           <ListItemIcon>
-            <Logout fontSize="small" />
+            <Logout fontSize="small" color='primary'/>
           </ListItemIcon>
           Logout
         </MenuItem>

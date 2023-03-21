@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -13,6 +13,9 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 import { PageStatus } from "../../../pages/home/Home";
+import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 
 export default function MainMemuBeforeLogin({
   setPageStatus,
@@ -39,7 +42,9 @@ export default function MainMemuBeforeLogin({
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}><MoreVertOutlinedIcon/></Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>
+              <MoreVertOutlinedIcon />
+            </Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -78,14 +83,29 @@ export default function MainMemuBeforeLogin({
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem onClick={()=>{setPageStatus(PageStatus.LOGIN); }}>
-          <Avatar /> Login
+        <MenuItem
+          onClick={() => {
+            setPageStatus(PageStatus.LOGIN);
+          }}
+        >
+          <LoginOutlinedIcon color="primary" />{" "}
+          <span className="pl-3">Login</span>
         </MenuItem>
-        <MenuItem onClick={()=>{setPageStatus(PageStatus.REGISTER); }}>
-          <Avatar /> Register
+        <MenuItem
+          onClick={() => {
+            setPageStatus(PageStatus.REGISTER);
+          }}
+        >
+                  <HowToRegOutlinedIcon color="primary" />{" "}
+          <span className="pl-3">Register</span>
         </MenuItem>
-        <MenuItem onClick={()=>{setPageStatus(PageStatus.NORMAL); }}>
-          <Avatar /> Home
+        <MenuItem
+          onClick={() => {
+            setPageStatus(PageStatus.NORMAL);
+          }}
+        >
+          <HomeOutlinedIcon color="primary" />{" "}
+          <span className="pl-3">Home</span>
         </MenuItem>
       </Menu>
     </React.Fragment>

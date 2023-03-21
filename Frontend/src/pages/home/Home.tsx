@@ -25,11 +25,14 @@ const Panel = tw.div``;
 const Home = () => {
   const [pageStatus, setPageStatus] = useState(PageStatus.NORMAL);
   const [topics, setTopics] = useState<T_Topic[]>([]);
-  const authCtx=useContext(authContext);
+  const authCtx = useContext(authContext);
   useEffect(() => {
-    if(authCtx.state.isLogin)
-        getTopics({bearer:authCtx.state.user.userCredential.accessToken}).then(p=>setTopics(p))
-  }, []);
+    if (authCtx.state.isLogin)
+      getTopics({ bearer: authCtx.state.user.userCredential.accessToken }).then(
+        (p) => setTopics(p)
+      );
+    else setTopics([]);
+  }, [authCtx.state.user]);
   return (
     <Container>
       <Wrapper>
@@ -44,10 +47,9 @@ const Home = () => {
             <Register pageStatus={pageStatus} setPageStatus={setPageStatus} />
           </Panel>
         )}
-        <TopicPostPanel setTopics={setTopics}/>
-        {topics&&topics.map((topic) => (
-          <Topic key={topic.id} topic={topic} />
-        ))}
+        <TopicPostPanel setTopics={setTopics} />
+        {topics &&
+          topics.map((topic) => <Topic key={topic.id} topic={topic} />)}
       </Wrapper>
     </Container>
   );

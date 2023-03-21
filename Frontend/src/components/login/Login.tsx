@@ -51,6 +51,7 @@ const Login = ({
           <div className="text-2xl text-center font-satisfy ">Login</div>
           <EmailField setEmail={setEmail} />
           <PasswordField setPassword={setPassword} />
+          <div className=" text-gray-400 pl-4 text-base">Test user: gg@gg.gg; pass: Ab12####</div>
           <button
             type="submit"
             className=" bg-primary-purple w-full my-2 h-12 rounded-lg text-white hover:bg-primary-purple-lighter"
