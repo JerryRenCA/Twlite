@@ -6,7 +6,12 @@ import { T_topicNewDto } from "./topicDtos"
 
 // get topics
 export const getTopics=async ({bearer}:{bearer:string}):Promise<T_Topic[]>=>{
-    const url=URLBasic+"/topics"
+    const url_b=URLBasic+"/topics"
+    const params = new URLSearchParams({
+      page: '1',
+      take: '5',
+    });
+    const url = `${url_b}?${params.toString()}`;
     try {
         const data= await fetch(url,{
           method:"GET",

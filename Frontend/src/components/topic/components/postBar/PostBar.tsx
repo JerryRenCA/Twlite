@@ -5,6 +5,7 @@ import TextFieldsOutlinedIcon from "@mui/icons-material/TextFieldsOutlined";
 import PhotoOutlinedIcon from "@mui/icons-material/PhotoOutlined";
 import VideoCameraBackOutlinedIcon from "@mui/icons-material/VideoCameraBackOutlined";
 import { useState } from "react";
+import { teal } from "@mui/material/colors";
 
 const Container = tw.div`pb-1`;
 
@@ -16,7 +17,7 @@ const PostBar = () => {
         fullWidth
         variant="text"
         aria-label="text button group"
-        sx={{ backgroundColor: "black", color: "white" }}
+        sx={{ backgroundColor: teal[800], color: "black",borderRadius:'6px' }}
       >
         <Button sx={{ color: "purple", ":hover": { color: "red" } }}>
           <Tooltip title="Text content." arrow>

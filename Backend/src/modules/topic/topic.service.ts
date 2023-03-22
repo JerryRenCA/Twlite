@@ -13,7 +13,7 @@ import { AwsS3Service } from '../../shared/services/aws-s3.service';
 import { ValidatorService } from '../../shared/services/validator.service';
 
 import type { TopicDto } from './dtos/topic.dto';
-import type { TopicsPageOptionsDto } from './dtos/topics-page-options.dto';
+import type { TopicPageOptionsDto } from './dtos/topics-page-options.dto';
 import { TopicEntity } from './topic.entity';
 import { TopicNewDto } from './dtos/topic-new.dto';
 
@@ -43,12 +43,12 @@ export class TopicService {
   }
 
   async getTopics(
-    pageOptionsDto: TopicsPageOptionsDto,
+    pageOptionsDto: TopicPageOptionsDto,
   ): Promise<PageDto<TopicDto>> {
     const queryBuilder = this.topicRepository.createQueryBuilder('topic');
     queryBuilder.addOrderBy('created_at',"DESC");
     const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
-
+    console.info('pageInfoDto:',items,pageMetaDto)///
     return items.toPageDto(pageMetaDto);
   }
 

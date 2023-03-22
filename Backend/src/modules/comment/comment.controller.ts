@@ -6,21 +6,13 @@ import {
   HttpStatus,
   Post,
   Query,
-  UploadedFile,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { PageDto } from '../../common/dto/page.dto';
 import { RoleType } from '../../constants';
-import {
-  ApiFile,
-  ApiPageOkResponse,
-  Auth,
-  AuthUser,
-  UUIDParam,
-} from '../../decorators';
-import { IFile } from '../../interfaces';
+import { ApiPageOkResponse, Auth, AuthUser, UUIDParam } from '../../decorators';
 import { TranslationService } from '../../shared/services/translation.service';
 import { UserEntity } from '../user/user.entity';
 import { CommentService } from './comment.service';
@@ -75,6 +67,8 @@ export class CommentController {
     @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: CommentsPageOptionsDto,
   ): Promise<PageDto<CommentDto>> {
+    console.info(topicId, pageOptionsDto);
+
     return this.commentService.getTopicComments(pageOptionsDto, topicId);
   }
 
@@ -85,17 +79,16 @@ export class CommentController {
     type: CommentDto,
     description: 'Successfully Post new comment',
   })
-  @ApiFile({ name: 'avatar' })
   async commentNew(
     @Body() commentNewDto: CommentNewDto,
     @AuthUser() user: UserEntity,
-    @UploadedFile() file?: IFile,
   ): Promise<CommentDto> {
+    console.info(commentNewDto);
     const createdComment = await this.commentService.createComment(
       commentNewDto,
       user.id,
-      file,
     );
+    console.info(createdComment);
 
     return createdComment.toDto({
       isActive: true,

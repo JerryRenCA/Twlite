@@ -24,7 +24,6 @@ import { AuthService } from './auth.service';
 import { LoginPayloadDto } from './dto/LoginPayloadDto';
 import { UserLoginDto } from './dto/UserLoginDto';
 import { UserRegisterDto } from './dto/UserRegisterDto';
-// import type { Multer } from '@nestjs/platform-express/multer/interfaces';
 
 @Controller('auth')
 @ApiTags('auth')

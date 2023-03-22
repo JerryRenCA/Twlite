@@ -9,9 +9,9 @@ import { Avatar } from "@mui/material";
 
 // ============== Types ===============================
 // ============== Styled Components ===================
-const Container = tw.div`h-[4rem] w-full border-b-[1px] border-white flex flex-col justify-center items-center`;
+const Container = tw.div`h-[4rem] w-full border-b-[0px] border-white flex flex-col justify-center items-center`;
 const Wrapper = tw.div`flex w-full justify-between`;
-const Logo = tw.div`text-3xl flex`;
+const Logo = tw.div`text-3xl flex cursor-pointer hover:text-gray-200`;
 // ============== Functions & Data ====================
 // ============== Module ==============================
 const Nav = ({

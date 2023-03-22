@@ -68,6 +68,7 @@ export class CommentService {
     console.log('topic comments:', JSON.stringify(pageOptionsDto),topicId)
     const queryBuilder = this.commentRepository.createQueryBuilder('comment');
     queryBuilder.where('comment.topic_id=:topicId',{topicId})
+    queryBuilder.addOrderBy("created_at",'DESC')
     const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);

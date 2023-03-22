@@ -23,7 +23,7 @@ import { UseLanguageInterceptor } from '../../interceptors/language-interceptor.
 import { UserEntity } from '../user/user.entity';
 import { CreatePostDto } from './dtos/create-post.dto';
 import { PostDto } from './dtos/post.dto';
-import { PostPageOptionsDto } from './dtos/post-page-options.dto';
+import { PostPageOptionsDto } from './dtos/post-page-options.dto';//Can't use import type here!!!
 import { UpdatePostDto } from './dtos/update-post.dto';
 import { PostService } from './post.service';
 

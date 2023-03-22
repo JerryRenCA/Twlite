@@ -18,7 +18,7 @@ export enum PageStatus {
 }
 // ============== Styled Components ===================
 const Container = tw.div`flex flex-col justify-center items-center`;
-const Wrapper = tw.div`min-w-[30rem] max-w-[40rem] border-b-[1px]`;
+const Wrapper = tw.div`min-w-[20rem] max-w-[40rem] border-b-[1px]`;
 const Panel = tw.div``;
 // ============== Functions & Data ====================
 // ============== Module ==============================

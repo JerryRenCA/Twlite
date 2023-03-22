@@ -1,4 +1,4 @@
-import { T_TopicComment } from "./topicComment";
+import { T_Comment } from "./comment";
 
 export type T_Topic={
     title:string,

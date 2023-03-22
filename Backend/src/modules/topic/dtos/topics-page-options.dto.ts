@@ -1,3 +1,4 @@
 import { PageOptionsDto } from '../../../common/dto/page-options.dto';
 
-export class TopicsPageOptionsDto extends PageOptionsDto {}
+export class TopicPageOptionsDto extends PageOptionsDto {}
+// export class PostPageOptionsDto extends PageOptionsDto {}
