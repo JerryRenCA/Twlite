@@ -9,4 +9,12 @@
 Using VsCode:
 type: ctrl + shift + p
 choose: > TypeScript: Restart TS server
+
+* Fixed a problem in typeORM:         
+At Row 1907:executeEntitiesAndRawResults
+ // .orderBy(orderBys) //here is the problem, comment it. Fix problem!
+ // And I have to use queryBuilder.orderBy("topic_created_at", "DESC") for order clause! :)
+And delete distinct
+            .select(` ${querySelects.join(", ")}`)
+                // .select(`DISTINCT ${querySelects.join(", ")}`)
 * 

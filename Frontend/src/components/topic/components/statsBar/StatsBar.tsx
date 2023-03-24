@@ -14,7 +14,7 @@ import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentContentField from "../../../comment/components/CommentContentField";
 import NewComment from "../../../comment/NewComment";
-import { T_Comment } from "../../../../data/types/comment";
+import { T_Comment } from "../../../../viewModel/comment/commentDtos";
 
 const Container = tw.div`pr-4 pb-2`;
 const StatsTag = tw.div`pl-2`;

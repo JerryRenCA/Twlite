@@ -2,6 +2,7 @@ import { Box, TextField } from "@mui/material";
 import tw from "tailwind-styled-components";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
 import { useEffect, useRef, useState } from "react";
+import { teal } from "@mui/material/colors";
 // ============== Types ===============================
 // ============== Styled Components ===================
 const Container = tw.div`grow flex`;
@@ -44,10 +45,9 @@ const CommentContentField = ({
           variant="standard"
           helperText=""
           sx={{
-            color: "white",
             "& .MuiInput-input": {
               paddingX: "1px",
-              color: "#fff",
+              color: teal[600],
               borderBottomWidth: "1px",
             },
             "& .MuiFormLabel-root": {

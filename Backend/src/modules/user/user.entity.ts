@@ -12,6 +12,7 @@ import type { IUserSettingsEntity } from './user-settings.entity';
 import { UserSettingsEntity } from './user-settings.entity';
 import { TopicEntity } from '../topic/topic.entity';
 import { ReplyEntity } from '../reply/reply.entity';
+import { CommentEntity } from '../comment/comment.entity';
 
 export interface IUserEntity extends IAbstractEntity<UserDto> {
   firstName?: string;
@@ -75,4 +76,6 @@ export class UserEntity
   topics: BlogEntity[];
   @OneToMany(() => ReplyEntity, (replyEntity) => replyEntity.user)
   replys: BlogEntity[];
+  @OneToMany(() => CommentEntity, (commentEntity) => commentEntity.user)
+  comments: CommentEntity[];
 }

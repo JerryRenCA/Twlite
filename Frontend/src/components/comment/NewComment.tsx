@@ -5,10 +5,9 @@ import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import CommentContentField from "./components/CommentContentField";
 import { Button } from "@mui/material";
 import { createComment } from "../../viewModel/comment/commentVM";
-import { T_commentNewDto } from "../../viewModel/comment/commentDtos";
+import { T_Comment, T_commentNewDto } from "../../viewModel/comment/commentDtos";
 import { authContext } from "../../contexts/authContext/AuthProvider";
 import { enqueueSnackbar } from "notistack";
-import { T_Comment } from "../../data/types/comment";
 
 // ============== Types ===============================
 
@@ -47,7 +46,7 @@ const NewComment = ({
         commentNew,
         bearer: authCtx.state.user.userCredential.accessToken,
       });
-      handleAfterNewComment(cmt)
+      handleAfterNewComment({...cmt,userName:authCtx.state.user.user.firstName})
       enqueueSnackbar("Reply successfully!", { variant: "success" });
       handleClearField();
     }

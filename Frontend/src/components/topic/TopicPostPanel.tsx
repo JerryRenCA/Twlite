@@ -3,8 +3,7 @@ import { enqueueSnackbar } from "notistack";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import tw from "tailwind-styled-components";
 import { authContext } from "../../contexts/authContext/AuthProvider";
-import { T_Topic } from "../../data/types/topic";
-import { T_topicNewDto } from "../../viewModel/topic/topicDtos";
+import { T_Topic, T_topicNewDto } from "../../viewModel/topic/topicDtos";
 import { createTopic } from "../../viewModel/topic/topicVM";
 import ContentField from "./components/contentField/ContentField";
 import PostBar from "./components/postBar/PostBar";
@@ -51,7 +50,7 @@ const TopicPostPanel = ({
       topicNew: topicNewDto,
       bearer: authCtx.state.user.userCredential.accessToken,
     }).then((p) => {
-      setTopics((prev) => [p, ...prev]);
+      setTopics((prev) => [{...p,userName:authCtx.state.user.user.firstName}, ...prev]);
     });
     enqueueSnackbar("Post successfully!", {
       variant: "success",

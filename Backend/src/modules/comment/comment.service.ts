@@ -52,6 +52,7 @@ export class CommentService {
     return this.commentRepository.findOneBy(findData);
   }
 
+  // get All comments
   async getComments(
     pageOptionsDto: CommentsPageOptionsDto,
   ): Promise<PageDto<CommentDto>> {
@@ -61,18 +62,23 @@ export class CommentService {
 
     return items.toPageDto(pageMetaDto);
   }
+
+  // get a topics Comments
   async getTopicComments(
     pageOptionsDto: CommentsPageOptionsDto,
     topicId:Uuid
   ): Promise<PageDto<CommentDto>> {
     console.log('topic comments:', JSON.stringify(pageOptionsDto),topicId)
     const queryBuilder = this.commentRepository.createQueryBuilder('comment');
+    queryBuilder.leftJoinAndSelect('comment.user','user')
     queryBuilder.where('comment.topic_id=:topicId',{topicId})
-    queryBuilder.addOrderBy("created_at",'DESC')
+    queryBuilder.addOrderBy("comment_created_at",'DESC')
     const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
 
     return items.toPageDto(pageMetaDto);
   }
+
+  // get comment by comment_id
   async getComment(commentId: Uuid): Promise<CommentDto> {
     const queryBuilder = this.commentRepository.createQueryBuilder('comment');
 

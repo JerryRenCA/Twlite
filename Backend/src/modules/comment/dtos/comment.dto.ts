@@ -12,8 +12,24 @@ export class CommentDto extends AbstractDto {
   @ApiPropertyOptional()
   content?: string;
 
+  @ApiPropertyOptional()
+  topicId?: string;
+  @ApiPropertyOptional()
+  userName?: string;
+  @ApiPropertyOptional()
+  userId?: string;
+
+  @ApiPropertyOptional()
+  avatar?: string;
+
   constructor(comment: CommentEntity, options?: CommentDtoOptions) {
     super(comment);
     this.content = comment.content;
+    this.topicId=comment.topicId;
+    if (comment.user) {
+      this.avatar = comment.user.avatar;
+      this.userId = comment.user.id;
+      this.userName = comment.user.firstName + ":" + comment.user.lastName;
+    }
   }
 }

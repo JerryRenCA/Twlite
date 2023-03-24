@@ -108,6 +108,16 @@ export class UserService {
     return userEntity.toDto();
   }
 
+  async getUserEntity(userId: Uuid): Promise<UserEntity> {
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+    queryBuilder.where('user.id = :userId', { userId });
+    const userEntity = await queryBuilder.getOne();
+    if (!userEntity) {
+      throw new UserNotFoundException();
+    }
+    return userEntity;
+  }
+
   async createSettings(
     userId: Uuid,
     createSettingsDto: CreateSettingsDto,
@@ -118,7 +128,7 @@ export class UserService {
   }
 
   async updateUser(user: UserEntity,userUpdateDto:UserUpdateDto){
-    
+
     user[userUpdateDto.key]=userUpdateDto.value;
     return this.userRepository.save(user);
   }

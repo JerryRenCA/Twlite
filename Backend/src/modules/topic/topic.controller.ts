@@ -6,9 +6,12 @@ import {
   HttpStatus,
   Post,
   Query,
+  UploadedFile,
   ValidationPipe,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+// eslint-disable-next-line import/no-unresolved
+import { IFile } from 'interfaces';
 
 import { PageDto } from '../../common/dto/page.dto';
 import { RoleType } from '../../constants';
@@ -44,16 +47,11 @@ export class TopicController {
     @Query(new ValidationPipe({ transform: true }))
     pageOptionsDto: TopicPageOptionsDto,
   ): Promise<PageDto<TopicDto>> {
-    return this.topicService.getTopics(pageOptionsDto);
-  }
+    const topic = await this.topicService.getTopics(pageOptionsDto);
+    console.info('userss..', topic.data[0]);
 
-  // @Get('PP')
-  // @Auth([RoleType.USER])
-  // @UseLanguageInterceptor()
-  // // @ApiPageOkResponse({ type: PageDto })
-  // async getPosts(@Query() pageOptionsDto: PostPageOptionsDto) {
-  //   return null;
-  // }
+    return topic;
+  }
 
   @Get(':id')
   @Auth([RoleType.USER])
@@ -75,11 +73,12 @@ export class TopicController {
   async topicNew(
     @Body() topicNewDto: TopicNewDto,
     @AuthUser() user: UserEntity,
-    // @UploadedFile() file?: IFile,
+    @UploadedFile() file?: IFile,
   ): Promise<TopicDto> {
     const createdTopic = await this.topicService.createTopic(
       topicNewDto,
       user.id,
+      file,
     );
 
     return createdTopic.toDto({
