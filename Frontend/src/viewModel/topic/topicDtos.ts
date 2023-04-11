@@ -10,7 +10,9 @@ export type T_Topic={
     userId?:string,// user who posted this topic,
     userName?:string,
     avatar:string,
-    
+    contentType:string,
+    parentId:string,
+    picFile:""
 }
 
 export const default_Topic:T_Topic={
@@ -22,7 +24,9 @@ export const default_Topic:T_Topic={
     userId:"",// user who posted this topic,
     userName:"",
     avatar:"",
-    
+    contentType:"",
+    parentId:"",
+    picFile:""
 }
 
 // Used for from fetch
@@ -35,6 +39,9 @@ export type T_topicFetch_Data={
     updatedAt:string,
     userName:string,
     userId:string,
+    contentType:string,
+    parentId:string,
+    picFile:""
 }
 
 export type T_topicFetch={
@@ -46,9 +53,15 @@ export type T_topicFetch={
 export type T_topicNewDto={
     title:string,
     content:string,
+    contentType:string,
+    parentId:string,
+    picFile:""
 }
 
 export const default_topicNewDto:T_topicNewDto={
     title:"",
     content:"",
+    contentType:"",
+    parentId:"",
+    picFile:"",
 }

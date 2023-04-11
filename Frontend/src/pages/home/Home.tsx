@@ -14,24 +14,18 @@ import { T_Topic } from "../../viewModel/topic/topicDtos";
 import { getTopics } from "../../viewModel/topic/topicVM";
 
 // ============== Types ===============================
-export enum PageStatus {
-  NORMAL,
-  LOGIN,
-  REGISTER,
-}
+
 // ============== Styled Components ===================
-const Container = tw.div`flex flex-col justify-center items-center`;
-const Wrapper = tw.div`min-w-[20rem] max-w-[40rem] border-b-[1px]`;
-const Panel = tw.div``;
+const Container = tw.div`flex flex-col w-full justify-center items-center`;
+const Wrapper = tw.div`w-full`;
+
 const MoreTag = tw.form`mb-4`;
 // ============== Functions & Data ====================
 // ============== Module ==============================
 const Home = () => {
-  const [pageStatus, setPageStatus] = useState(PageStatus.NORMAL);
   const [topics, setTopics] = useState<T_Topic[]>([]);
-  const [pageParams, setPageParams] = useState<T_fetch_meta>(
-    default_fetch_meta
-  );
+  const [pageParams, setPageParams] =
+    useState<T_fetch_meta>(default_fetch_meta);
   const authCtx = useContext(authContext);
   useEffect(() => {
     if (authCtx.state.isLogin)
@@ -39,43 +33,39 @@ const Home = () => {
         bearer: authCtx.state.user.userCredential.accessToken,
         pageSearchParams: pageParams,
       }).then((p) => {
-        setTopics(prev=>[...p.data]);
-        setPageParams({...p.meta,page:p.meta.page+1});
-        console.log(topics)
+        setTopics((prev) => [...p.data]);
+        setPageParams({ ...p.meta, page: p.meta.page + 1 });
+        // console.log(topics);
       });
     else setTopics([]);
   }, [authCtx.state.user]);
   const handleGetMoreTopic = () => {
-    console.log("pageParams::",pageParams)
-    if(pageParams.hasNextPage){
-        setPageParams({...pageParams,page:pageParams.page+1})
-        getTopics({
-          bearer: authCtx.state.user.userCredential.accessToken,
-          pageSearchParams: pageParams,
-        }).then((p) => {
-          setTopics(prev=>[...prev,...p.data,]);
-          console.log("tt:",topics,p.data)
-          setPageParams({...p.meta,page:p.meta.page+1});
-        });
+    // console.log("pageParams::", pageParams);
+    if (pageParams.hasNextPage) {
+      setPageParams({ ...pageParams, page: pageParams.page + 1 });
+      getTopics({
+        bearer: authCtx.state.user.userCredential.accessToken,
+        pageSearchParams: pageParams,
+      }).then((p) => {
+        setTopics((prev) => [...prev, ...p.data]);
+        // console.log("tt:", topics, p.data);
+        setPageParams({ ...p.meta, page: p.meta.page + 1 });
+      });
     }
   };
   return (
     <Container>
       <Wrapper>
-        <Nav pageStatus={pageStatus} setPageStatus={setPageStatus} />
-        {pageStatus == PageStatus.LOGIN && (
-          <Panel>
-            <Login pageStatus={pageStatus} setPageStatus={setPageStatus} />
-          </Panel>
-        )}
-        {pageStatus == PageStatus.REGISTER && (
-          <Panel>
-            <Register pageStatus={pageStatus} setPageStatus={setPageStatus} />
-          </Panel>
-        )}
-        <TopicPostPanel setTopics={setTopics} />
+        <TopicPostPanel
+          topicId=""
+          topicLevel={0}
+          setChildTopics={setTopics}
+          handleAfterNewComment={async () => {}}
+        />
         {topics &&
-          topics.map((topic,idx) => <Topic key={idx} topic={topic} />)}
+          topics.map((topic, idx) => (
+            <Topic key={topic.id + idx} topic={topic} topicLevel={0} />
+          ))}
         <MoreTag>
           <Button
             onClick={handleGetMoreTopic}

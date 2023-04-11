@@ -1,5 +1,5 @@
 import { UserEntity } from '../user/user.entity';
-import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne } from 'typeorm';
 
 import type { IAbstractEntity } from '../../common/abstract.entity';
 import { AbstractEntity } from '../../common/abstract.entity';
@@ -15,8 +15,7 @@ import { CommentEntity } from '../comment/comment.entity';
 
 export interface ITopicEntity extends IAbstractEntity<TopicDto> {
   title: string;
-
-  content: string;
+  content?: string;
 
 }
 
@@ -26,14 +25,21 @@ export class TopicEntity
   extends AbstractEntity<TopicDto, TopicDtoOptions>
   implements ITopicEntity
 {
-  @Column({ type: 'uuid' })
-  userId: Uuid;
 
   @Column({ nullable: false })
   title: string;
 
+  @Column({ nullable: true })
+  content?: string;
+
   @Column({ nullable: false })
-  content: string;
+  contentType: string;
+
+  @Column({ nullable: true })
+  picFile?: string;
+
+  @Column({ type: 'uuid' })
+  userId: Uuid;
 
   @ManyToOne(() => UserEntity, (userEntity) => userEntity.topics, {
     onDelete: 'CASCADE',
@@ -42,10 +48,16 @@ export class TopicEntity
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @OneToMany(() => ReplyEntity, (replyEntity) => replyEntity.topic)
-  replys: ReplyEntity[];
+  @Column({ type: 'uuid',nullable: true  })
+  parentId?: Uuid;
+  @ManyToOne(() => TopicEntity, (topicEntity) => topicEntity.children)
+  @JoinColumn({ name: 'parent_id' })
+  parent: TopicEntity[];
 
-  @OneToMany(() => ReplyEntity, (replyEntity) => replyEntity.topic)
+  @OneToMany(() => TopicEntity, (topicEntity) => topicEntity.parent)
+  children: TopicEntity[];
+
+  @OneToMany(() => CommentEntity, (commentEntity) => commentEntity.topic)
   comments: CommentEntity[];
 
 }

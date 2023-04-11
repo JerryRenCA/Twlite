@@ -16,3 +16,4 @@ export class UserUpdateDto {
   @Trim()
   readonly value: string;
 }
+

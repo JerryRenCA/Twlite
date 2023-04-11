@@ -45,7 +45,6 @@ export class ReplyService {
       const reply = this.replyRepository.create({...replyNewDto,userId});
 
       await this.replyRepository.save(reply);
-      console.info('dto',reply.topic)
       console.info('dto',reply.user)
       return reply;
   }

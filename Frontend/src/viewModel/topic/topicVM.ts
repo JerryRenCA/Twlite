@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { authContext } from "../../contexts/authContext/AuthProvider";
-import { default_fetch_meta, T_fetch_meta, URLBasic } from "../../data/types/dataConfig";
+import { default_fetch_meta, TopTopicId, T_fetch_meta, URLBasic } from "../../data/types/dataConfig";
 import {
   default_Topic,
   T_Topic,
@@ -20,18 +20,23 @@ const transformTopicDto = (fetched: T_topicFetch_Data): T_Topic => {
     userId: fetched.userId,
     userName: fetched.userName,
     avatar: fetched.avatar,
+    contentType:fetched.contentType,
+    parentId:fetched.parentId,
+    picFile:fetched.picFile,
   };
 };
 
 // get topics
 export const getTopics = async ({
   bearer,
+  topicId=TopTopicId,
   pageSearchParams=default_fetch_meta
 }: {
   bearer: string;
+  topicId?:string,
   pageSearchParams?:T_fetch_meta
 }): Promise<{data:T_Topic[],meta:T_fetch_meta}> => {
-  const url_b = URLBasic + "/topics";
+  const url_b = URLBasic + "/topics" + "/" + topicId;
   const params = new URLSearchParams({
     page: pageSearchParams.page.toString(),
     take: pageSearchParams.take.toString(),
@@ -58,20 +63,31 @@ export const getTopics = async ({
 // post new topic
 export const createTopic = async ({
   topicNew,
+  file,
   bearer,
 }: {
   topicNew: T_topicNewDto;
+  file?:File,
   bearer: string;
 }): Promise<T_Topic> => {
+  console.log("topicNew::",topicNew)
   const url = URLBasic + "/topics/new";
+  const formData=new FormData();
+  if(file)
+    formData.append('picfile',file);
+  formData.append("content",topicNew.content)
+  formData.append("contentType",topicNew.contentType)
+  formData.append("parentId",topicNew.parentId)
+  formData.append("picFile",topicNew.picFile)
+  formData.append("title",topicNew.title)
   try {
     const data = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        // "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${bearer}`,
       },
-      body: JSON.stringify(topicNew),
+      body: formData,
     });
     const dataJson = (await data.json()) as T_topicFetch_Data;
     console.log(dataJson);

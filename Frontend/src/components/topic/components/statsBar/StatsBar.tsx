@@ -8,27 +8,47 @@ import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import { grey } from "@mui/material/colors";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentContentField from "../../../comment/components/CommentContentField";
 import NewComment from "../../../comment/NewComment";
 import { T_Comment } from "../../../../viewModel/comment/commentDtos";
+import { T_Topic } from "../../../../viewModel/topic/topicDtos";
+import TopicPostPanel from "../../TopicPostPanel";
+import { globalStateContext } from "../../../../contexts/globalStateContext/GlobalStateContext";
 
-const Container = tw.div`pr-4 pb-2`;
+const Container = tw.div``;
 const StatsTag = tw.div`pl-2`;
 
 const StatsBar = ({
   topicId,
+  topicLevel,
+  setChildTopics,
   handleAfterNewComment,
 }: {
   topicId: string;
-  handleAfterNewComment: (newComment: T_Comment) => Promise<void>;
+  topicLevel:number,
+  setChildTopics: React.Dispatch<React.SetStateAction<T_Topic[]>>;
+  handleAfterNewComment: (newComment: T_Topic) => Promise<void>;
 }) => {
   const [showNewComment, setShowNewComment] = useState(false);
+  const [realShowNewComment, setRealShowNewComment] = useState(true);
   const [favorite, setFavorite] = useState(false);
-
+  const globalStateCtx = useContext(globalStateContext);
+  useEffect(() => {
+    setShowNewComment(false);
+  }, [globalStateCtx.state]);
+  const handleOpenNewTopicPanle = () => {
+    globalStateCtx.setState((prev) => {
+      return { ...prev, hasOpenedNewTopicPanel: false };
+    });
+    setTimeout(() => {
+      setRealShowNewComment((prev) => !prev);
+      setShowNewComment(realShowNewComment);
+    }, 0);
+  };
   return (
     <Container>
       <ButtonGroup
@@ -39,7 +59,7 @@ const StatsBar = ({
       >
         <Button
           sx={{ color: "white", ":hover": { color: "red" } }}
-          onClick={() => setShowNewComment((prev) => !prev)}
+          onClick={handleOpenNewTopicPanle}
         >
           <Tooltip title="Reply" arrow>
             <ReplyOutlinedIcon />
@@ -70,7 +90,14 @@ const StatsBar = ({
           <StatsTag>1.5M</StatsTag>
         </Button>
       </ButtonGroup>
-      {showNewComment && <NewComment topicId={topicId} handleAfterNewComment={handleAfterNewComment}/>}
+      {topicLevel<3 && showNewComment && (
+        <TopicPostPanel
+        topicLevel={topicLevel}
+          topicId={topicId}
+          setChildTopics={setChildTopics}
+          handleAfterNewComment={handleAfterNewComment}
+        />
+      )}
     </Container>
   );
 };

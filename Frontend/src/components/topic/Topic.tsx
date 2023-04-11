@@ -12,32 +12,44 @@ import { T_Topic } from "../../viewModel/topic/topicDtos";
 import { T_Comment } from "../../viewModel/comment/commentDtos";
 import NotesIcon from "@mui/icons-material/Notes";
 import { formatDistanceToNow } from "date-fns";
+import { getTopics } from "../../viewModel/topic/topicVM";
+import PictureField from "./components/pictureField/PictureField";
+import { getAvatarUrl, getPicUrl } from "../../viewModel/url/urlVM";
 
 // ============== Types ===============================
 // ============== Styled Components ===================
 const Container = tw.div`border-x-[1px] border-dashed border-gray-600`;
-const Wrapper = tw.div`grid grid-cols-6`;
-const LeftPanel = tw.div`p-4`;
-const RightPanel = tw.div` col-span-5`;
+const Wrapper = tw.div`flex`;
+const LeftPanel = tw.div` pt-6 pr-4 w-[7rem] flex justify-center`;
+const RightPanel = tw.div` grow`;
+const WrapperStatsTag = tw.div``;
 const UserTag = tw.div`p-1 font-roboto font-bold`;
 const Title = tw.div` min-h-[2rem] font-mono `;
-const HalfBoder = tw.div`absolute border-t-[1px] min-h-[2rem] w-20 ml-2 border-green-400 border-dashed `;
-const Content = tw.div` min-h-[6rem] px-2 pt-1 font-roboto text-gray-200 cursor-pointer`;
+const Content = tw.div` min-h-[3rem] px-2 pt-1 font-roboto text-gray-200 cursor-pointer`;
+const ImgDiv = tw.div` min-h-[3rem] max-h-[40rem] rounded-lg  px-2 mb-2 overflow-hidden cursor-pointer flex justify-center`;
+const ImgTag = tw.img` object-contain max-h-[40rem]  rounded-lg `;
 const CommentContainer = tw.div` `;
 
 // ============== Functions & Data ====================
 // ============== Module ==============================
-const Topic = ({ topic }: { topic: T_Topic }) => {
-  const [comments, setComments] = useState<T_Comment[]>([]);
+const Topic = ({
+  topic,
+  topicLevel,
+}: {
+  topic: T_Topic;
+  topicLevel: number;
+}) => {
+  const [childTopics, setChildTopics] = useState<T_Topic[]>([]);
   const [isOpenComments, setIsOpenComments] = useState(false);
   const authCtx = useContext(authContext);
+  // open child list
   const handleContentClick = async (flipOpen = true) => {
     if (!isOpenComments) {
-      const cmts = await getComments({
+      const cmts = await getTopics({
         topicId: topic.id,
         bearer: authCtx.state.user.userCredential.accessToken,
       });
-      setComments(cmts);
+      setChildTopics(cmts.data);
       enqueueSnackbar("Comments refreshed!", {
         variant: "success",
         autoHideDuration: 2000,
@@ -45,20 +57,24 @@ const Topic = ({ topic }: { topic: T_Topic }) => {
     }
     if (flipOpen) setIsOpenComments((prev) => !prev);
   };
-  const handleAfterNewComment = async (newComment: T_Comment) => {
+
+  // after add new topic
+  const handleAfterNewComment = async (newComment: T_Topic) => {
     setIsOpenComments(true);
-    if (comments.length == 0) {
+    if (childTopics.length == 0) {
       await handleContentClick(false);
     } else {
-      setComments((prev) => [newComment, ...prev]);
+      setChildTopics((prev) => [newComment, ...prev]);
     }
   };
+  // console.log(getPicUrl(topic.picFile));
+  // console.log(topic);
   return (
     <Container>
       <hr />
       <Wrapper>
         <LeftPanel>
-          <Avatar sx={{ bgcolor: grey[500], cursor: "pointer" }}>
+          <Avatar sx={{ bgcolor: grey[500], cursor: "pointer" }} src={getAvatarUrl(topic.avatar)}>
             <NaturePeopleOutlinedIcon />
           </Avatar>
         </LeftPanel>
@@ -74,17 +90,32 @@ const Topic = ({ topic }: { topic: T_Topic }) => {
             <NotesIcon sx={{ color: "green", marginRight: "4px" }} />
             {topic.title}
           </Title>
-          <Content onClick={(e) => handleContentClick()}>
-            {topic.content}
-          </Content>
-          <StatsBar
-            topicId={topic.id}
-            handleAfterNewComment={handleAfterNewComment}
-          />
+          {topic.contentType == "A" && (
+            <Content onClick={(e) => handleContentClick()}>
+              {topic.content}
+            </Content>
+          )}
+          {topic.contentType == "B" && topic.picFile && (
+            <ImgDiv>
+              <ImgTag src={getPicUrl(topic.picFile)} alt="pic file" />
+            </ImgDiv>
+          )}
+          <WrapperStatsTag>
+            <StatsBar
+              topicId={topic.id}
+              topicLevel={topicLevel + 1}
+              setChildTopics={setChildTopics}
+              handleAfterNewComment={handleAfterNewComment}
+            />
+          </WrapperStatsTag>
           {isOpenComments && (
             <CommentContainer>
-              {comments.map((comment) => (
-                <Comment key={comment.id} comment={comment} />
+              {childTopics.map((topic) => (
+                <Topic
+                  key={topic.id}
+                  topic={topic}
+                  topicLevel={topicLevel + 1}
+                />
               ))}
             </CommentContainer>
           )}

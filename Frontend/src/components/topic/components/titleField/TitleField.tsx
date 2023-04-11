@@ -31,7 +31,7 @@ const TitleField = React.forwardRef(
     return (
       <Container>
         <Box sx={{ display: "flex", alignItems: "flex-end", color: "white" }}>
-          <TitleRoundedIcon sx={{ color: "black", mr: 1, mb: 3.3 }} />
+          <TitleRoundedIcon sx={{ color: "black", mr: 1, mb: 1.3 }} />
           <TextField
             inputRef={refField}
             value={title}
@@ -41,18 +41,29 @@ const TitleField = React.forwardRef(
             id="input-with-sx"
             label=" Wag somthing ..."
             variant="standard"
-            helperText="Post something. Length: 1 - 100 characters."
+            // helperText="Post something. Length: 1 - 100 characters."
             sx={{
               "& .MuiInput-input": {
                 color: teal[500],
                 paddingX: "1px",
+                borderBottomWidth:"0px",
+                outlineWidth:"0px",
               },
               "& .MuiFormLabel-root": {
                 color: "white",
+                borderBottomWidth:"0px",
+                outlineWidth:"0px",
+              },
+              "& .MuiTextField-root": {
+                color: "red",
+                borderBottomWidth:"0px",
+                outlineWidth:"0px",
               },
               "& .MuiFormHelperText-root": {
                 color: "gray",
               },
+              borderBottomWidth:"0px",
+              outlineWidth:"0px",
             }}
           />
         </Box>

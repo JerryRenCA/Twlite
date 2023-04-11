@@ -15,7 +15,16 @@ export class TopicDto extends AbstractDto {
   content?: string;
 
   @ApiPropertyOptional()
+  contentType?: string;
+
+  @ApiPropertyOptional()
+  picFile?: string;
+
+  @ApiPropertyOptional()
   userId?: string;
+
+  @ApiPropertyOptional()
+  parentId?: string|null;
 
   @ApiPropertyOptional()
   userName?: string;
@@ -27,6 +36,9 @@ export class TopicDto extends AbstractDto {
     super(topic);
     this.title = topic.title;
     this.content = topic.content;
+    this.picFile = topic.picFile;
+    this.contentType = topic.contentType;
+    this.parentId = topic.parentId;
     if (topic.user) {
       this.avatar = topic.user.avatar;
       this.userName = topic.user.firstName + ":" + topic.user.lastName;

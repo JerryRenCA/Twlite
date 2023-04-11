@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import tw from "tailwind-styled-components";
 import { authContext } from "../../contexts/authContext/AuthProvider";
-import { PageStatus } from "../../pages/home/Home";
+import { PageStatus } from "../../pages/layout/MainLayout";
+
 import { T_userInfoRegisterDto } from "../../viewModel/user/userDtos";
 
 import {
@@ -30,8 +31,8 @@ const Register = ({
   const [password, setPassword] = useState("");
   const [registerErr, setRegisterErr] = useState(false);
   const userRegister: T_userInfoRegisterDto = {
-    firstName: "jerry",
-    lastName: "ren",
+    firstName: "NotSet",
+    lastName: "NotSet",
     email: "",
     password: "",
     phone: "(+86)(123)123-4567",

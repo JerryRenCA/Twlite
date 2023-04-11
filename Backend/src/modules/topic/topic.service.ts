@@ -19,6 +19,7 @@ import { TopicNewDto } from "./dtos/topic-new.dto";
 import { UserEntity } from "../user/user.entity";
 import { UserService } from "../user/user.service";
 import { CostExplorer } from "aws-sdk";
+import { NIL } from "uuid";
 
 @Injectable()
 export class TopicService {
@@ -33,16 +34,22 @@ export class TopicService {
     private commandBus: CommandBus
   ) {}
 
+  private TopTopicId = "1e5082d7-fc97-4f9e-bf5c-0a08ce7ed5c8" as Uuid;
+
   async createTopic(
     topicNewDto: TopicNewDto,
     userId: Uuid,
-    file?: IFile
+    file?: Express.Multer.File
   ): Promise<TopicEntity> {
+    if (topicNewDto.parentId == "") topicNewDto.parentId = this.TopTopicId;
     const topic = this.topicRepository.create({ ...topicNewDto, userId });
+    if(file)
+    topic.picFile = file.filename;
     console.info("topic", topic);
     await this.topicRepository.save(topic);
     return topic;
   }
+
   /**
    * Find single topic
    */
@@ -52,12 +59,25 @@ export class TopicService {
     return this.topicRepository.findOneBy(findData);
   }
 
+  async getChildTopics(
+    parentId: Uuid,
+    pageOptionsDto: TopicPageOptionsDto
+  ): Promise<PageDto<TopicDto>> {
+    if (parentId == "1e5082d7-fc97-4f9e-bf5c-0a08ce7ed5c8")
+      parentId = this.TopTopicId;
+    const queryBuilder = this.topicRepository.createQueryBuilder("topic");
+    queryBuilder.leftJoinAndSelect("topic.user", "user");
+    queryBuilder.orderBy("topic_created_at", "DESC");
+    queryBuilder.where("topic.parent_id=:parentId", { parentId });
+    const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
+    return items.toPageDto(pageMetaDto);
+  }
+
   async getTopics(
     pageOptionsDto: TopicPageOptionsDto
   ): Promise<PageDto<TopicDto>> {
-    // console.log("page:",pageOptionsDto)
     const queryBuilder = this.topicRepository.createQueryBuilder("topic");
-    queryBuilder.leftJoinAndSelect('topic.user','user')
+    queryBuilder.leftJoinAndSelect("topic.user", "user");
     queryBuilder.orderBy("topic_created_at", "DESC");
     const [items, pageMetaDto] = await queryBuilder.paginate(pageOptionsDto);
     return items.toPageDto(pageMetaDto);
@@ -78,6 +98,4 @@ export class TopicService {
     }
     return topicEntity.toDto();
   }
-
-  
 }

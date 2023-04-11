@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import tw from "tailwind-styled-components";
 import { authContext } from "../../contexts/authContext/AuthProvider";
-import { PageStatus } from "../../pages/home/Home";
+import { PageStatus } from "../../pages/layout/MainLayout";
 import {
   T_userInfoLoginDto,
 } from "../../viewModel/user/userDtos";

@@ -12,10 +12,11 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
-import { PageStatus } from "../../../pages/home/Home";
+
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
+import { PageStatus } from "../../../pages/layout/MainLayout";
 
 export default function MainMemuBeforeLogin({
   setPageStatus,

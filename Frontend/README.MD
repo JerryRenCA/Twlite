@@ -15,3 +15,9 @@ Features
 5> postcss,
 6> svg support,
 7> 
+
+# Deploy backend,
+1> modify dataConfig in frontEnd;
+2> update table schema in postgresql on server;
+3> update node_modules, take care of the SelectQueryBuild method for TypeORM.
+4> 

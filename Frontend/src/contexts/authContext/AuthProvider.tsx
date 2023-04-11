@@ -3,7 +3,7 @@ import { default_User, default_UserCredential, T_User, T_UserCredential } from "
 
 export const USERLOCALSTORAGE = "userAuthInfo";
 
-export type T_userLocalStorage = {
+export type T_userLocalStorage = { // type of save to local storage
   userCredential: T_UserCredential;
   user: T_User;
 };
@@ -11,7 +11,7 @@ export const default_userLocalStorage: T_userLocalStorage = {
   userCredential: default_UserCredential,
   user: default_User,
 };
-type T_authState = {
+type T_authState = {              // type of reducer state
   user: T_userLocalStorage;
   isLogin: boolean;
 };
@@ -30,12 +30,12 @@ enum AuthActionType {
   UPDATE, // update userCollection
 }
 
-type T_authReducerActionWithPayload = {
+type T_authReducerActionWithPayload = {   // type of reducer action
   authActionType: AuthActionType;
   payload?: T_userLocalStorage;
 };
 
-const authReducer = (
+const authReducer = (         // use reducer state and reducer action to define reducer
   authState: T_authState,
   authReducerActionWithPayload: T_authReducerActionWithPayload
 ): T_authState => {
@@ -75,9 +75,9 @@ const useAuthContext = (authState: T_authState) => {
   return { state, dispatch, login, logout, update };
 };
 
-type T_authContext = ReturnType<typeof useAuthContext>;
+type T_authContext = ReturnType<typeof useAuthContext>;  // type of context, includes state and methods;
 
-const default_authContext: T_authContext = {
+const default_authContext: T_authContext = {  // the content of usecontext
   state: default_authState(),
   dispatch: () => {},
   login: () => {},

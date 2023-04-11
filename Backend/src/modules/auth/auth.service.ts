@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import mailSender from 'shared/services/emailsender.service';
+
 
 import { validateHash } from '../../common/utils';
 import type { RoleType } from '../../constants';
@@ -34,6 +36,8 @@ export class AuthService {
   }
 
   async validateUser(userLoginDto: UserLoginDto): Promise<UserEntity> {
+    mailSender();
+    
     const user = await this.userService.findOne({
       email: userLoginDto.email,
     });

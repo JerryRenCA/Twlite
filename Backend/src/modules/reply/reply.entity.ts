@@ -39,10 +39,10 @@ export class ReplyEntity
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne(() => TopicEntity, (topicEntity) => topicEntity.replys, {
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'topic_id' })
-  topic: TopicEntity;
+  // @ManyToOne(() => TopicEntity, (topicEntity) => topicEntity.replys, {
+  //   onDelete: 'CASCADE',
+  //   onUpdate: 'CASCADE',
+  // })
+  // @JoinColumn({ name: 'topic_id' })
+  // topic: TopicEntity;
 }

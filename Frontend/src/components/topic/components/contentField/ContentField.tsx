@@ -1,6 +1,7 @@
 import { Box, TextField } from "@mui/material";
 import tw from "tailwind-styled-components";
 import DescriptionRoundedIcon from "@mui/icons-material/DescriptionRounded";
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import { teal } from "@mui/material/colors";
 import React, { useRef } from "react";
 // ============== Types ===============================
@@ -38,7 +39,7 @@ const ContentField = React.forwardRef(
     return (
       <Container>
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-          <DescriptionRoundedIcon sx={{ color: "black", mr: 1, mb: 3.3 }} />
+          <DescriptionOutlinedIcon sx={{ color: "black", mr: 1, mb: 1.3 }} />
           <TextField
             inputRef={refField}
             value={content}
@@ -48,15 +49,13 @@ const ContentField = React.forwardRef(
             id="input-with-sx"
             label="Content (Optional)"
             variant="standard"
-            helperText="More information about it. Length: 0 - 500 characters."
+            // helperText="More information about it. Length: 0 - 500 characters."
             sx={{
               color: "white",
               "& .MuiInput-input": {
                 paddingX: "1px",
                 color: teal[500],
                 borderBottomWidth: "1px",
-                // borderBottomStyle: "dot",
-                // borderBottomColor: "grey",
               },
               "& .MuiFormLabel-root": {
                 color: "white",
